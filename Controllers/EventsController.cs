@@ -32,6 +32,11 @@ namespace MinhaMissaCore.Controllers
                     Active = true
                 }
         };
+        public DataContext dataContext;
+        public EventsController(DataContext dataContext)
+        {
+            this.dataContext = dataContext;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<Event>>> Get()

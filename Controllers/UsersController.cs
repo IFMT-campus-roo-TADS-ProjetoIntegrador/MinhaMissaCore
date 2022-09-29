@@ -35,6 +35,12 @@ namespace MinhaMissaCore.Controllers
                     Role = "Administrador"
                 }
         };
+        public DataContext dataContext;
+
+        public UsersController(DataContext dataContext)
+        {
+            this.dataContext = dataContext;
+        }
 
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()

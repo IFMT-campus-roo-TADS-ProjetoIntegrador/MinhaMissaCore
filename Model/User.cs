@@ -9,19 +9,26 @@
         /// <summary>
         /// Nome completo do usuário.
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
         /// <summary>
         /// Email do usuário.
         /// </summary>
-        public string Email { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = default!;
         /// <summary>
         /// Senha do usuário.
         /// </summary>
-        public string Password { get; set; } = string.Empty;
+        public string PasswordSalt { get; set; } = default!;
         /// <summary>
         /// Define a regra de acesso do usuário.
-        /// TODO Definir uma interface Enum para os tipos de usuários do sistema.
         /// </summary>
         public string Role { get; set; } = string.Empty;
+        /// <summary>
+        /// Lista de eventos registrados do usuário.
+        /// </summary>
+        public List<Event> EventsRegistered { get; set; } = default!;
+        /// <summary>
+        /// Indica se o usuário está ativo
+        /// </summary>
+        public bool Active { get; set; } = default;
     }
 }

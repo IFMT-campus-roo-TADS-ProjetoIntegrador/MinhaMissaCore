@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MinhaMissaCore.Model;
-using System.ComponentModel.DataAnnotations;
 
 namespace MinhaMissaCore.Controllers
 {
@@ -8,33 +7,8 @@ namespace MinhaMissaCore.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private static List<User> Users = new List<User>
-        {
-                new User
-                {
-                    Id = 1,
-                    Name = "Felipe Queiroz",
-                    Email = "felipequeiroz@minhamissa.com",
-                    Password = "12345",
-                    Role = "Administrador"
-                },
-                new User
-                {
-                    Id = 2,
-                    Name = "Gabriel Laroca",
-                    Email = "gabriellaroca@minhamissa.com",
-                    Password = "12345",
-                    Role = "Administrador"
-                },
-                new User
-                {
-                    Id = 3,
-                    Name = "Walisson Ferraz",
-                    Email = "walissonferraz@minhamissa.com",
-                    Password = "12345",
-                    Role = "Administrador"
-                }
-        };
+        private static List<User> Users = new List<User>();
+
         public DataContext dataContext;
 
         public UsersController(DataContext dataContext)
@@ -51,11 +25,11 @@ namespace MinhaMissaCore.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<List<User>>> GetById(int id)
         {
-            var user = Users.Find(u => u.Id == id);
+            var user = await this.dataContext.Users.FindAsync(id);
 
             if (user is null)
             {
-                return BadRequest("User not found");
+                return NotFound();
             }
 
             return Ok(user);
@@ -64,40 +38,46 @@ namespace MinhaMissaCore.Controllers
         [HttpPost]
         public async Task<ActionResult<List<User>>> AddUser(User user)
         {
-            Users.Add(user);
+            await this.dataContext.AddAsync(user);
+            await this.dataContext.SaveChangesAsync();
+
             return Ok(Users);
         }
 
         [HttpPut]
         public async Task<ActionResult<List<User>>> UpdateUser(User userRequest)
         {
-            var userToUpdate = Users.Find(u => u.Id == userRequest.Id);
+            var userToUpdate = await this.dataContext.Users.FindAsync(userRequest);
 
-            if (userToUpdate is null)
+            if (userToUpdate == null)
             {
-                return BadRequest("User not found");
+                return NotFound();
             }
 
-            userToUpdate.Name = userRequest.Name;
-            userToUpdate.Email = userRequest.Email;
-            userToUpdate.Password = userRequest.Password;
+            userToUpdate.Username = userRequest.Username;
+            userToUpdate.PasswordHash = userRequest.PasswordHash;
+            userToUpdate.PasswordSalt = userRequest.PasswordSalt;
+            userToUpdate.EventsRegistered = userRequest.EventsRegistered;
             userToUpdate.Role = userRequest.Role;
+            userToUpdate.Active = userRequest.Active;
 
+            await this.dataContext.SaveChangesAsync();
             return Ok(Users);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
-            var userToDelete = Users.Find(u => u.Id == id);
+            var userToDelete = await this.dataContext.Users.FindAsync(id);
 
-            if (userToDelete is null)
+            if (userToDelete == null)
             {
-                return BadRequest("User not found");
+                return NotFound();
             }
 
-            Users.Remove(userToDelete);
-            return Ok(userToDelete);
+            this.dataContext.Users.Remove(userToDelete);
+            await this.dataContext.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using MinhaMissaCore.Model;
 
 namespace MinhaMissaCore.Controllers
@@ -7,31 +8,8 @@ namespace MinhaMissaCore.Controllers
     [Route("[controller]")]
     public class EventsController : ControllerBase
     {
-        private List<Event> Events = new List<Event>
-        {
-            new Event
-                {
-                    Id = 1,
-                    Name = "Missa de Natal",
-                    Description = "Missa de Natal, que celebra o nascimento de Jesus.",
-                    StartDate = DateTime.Now,
-                    LastDate = DateTime.Now.AddDays(90),
-                    Local = "Paróquia Nossa Senhora Aparecida",
-                    Places = 400,
-                    Active = true
-                },
-                new Event
-                {
-                    Id = 2,
-                    Name = "Missa de Pascoa",
-                    Description = "Missa de Pascoa, que celebra a ressurreição de Jesus.",
-                    StartDate = DateTime.Now,
-                    LastDate = DateTime.Now.AddDays(120),
-                    Local = "Paróquia Nossa Senhora Aparecida",
-                    Places = 300,
-                    Active = true
-                }
-        };
+        private static List<Event> Events = new List<Event>();
+
         public DataContext dataContext;
         public EventsController(DataContext dataContext)
         {
@@ -47,11 +25,11 @@ namespace MinhaMissaCore.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Event>>> GetById(int id)
         {
-            var eventToGet = Events.Find(e => e.Id == id);
-            
+            var eventToGet = await this.dataContext.Events.FindAsync(id);
+
             if (eventToGet is null)
             {
-                return BadRequest("User not found");
+                return NotFound();
             }
 
             return Ok(eventToGet);

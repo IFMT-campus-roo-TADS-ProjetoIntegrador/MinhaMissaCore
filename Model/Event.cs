@@ -5,7 +5,7 @@
         /// <summary>
         /// Identificação do evento.
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
         /// <summary>
         /// Nome do Evento, título.
         /// </summary>
@@ -34,11 +34,11 @@
         /// <summary>
         /// Instituição do evento.
         /// </summary>
-        public Instituition Instituition { get; set; } = default!;
+        public Instituition? Instituition { get; set; } = default!;
         /// <summary>
         /// Lista de usuários participantes do Evento.
         /// </summary>
-        public List<User> Participants { get; set; } = default!;
+        public List<User>? Participants { get; set; } = default!;
         /// <summary>
         /// Indica se o evento está ativo.
         /// </summary>

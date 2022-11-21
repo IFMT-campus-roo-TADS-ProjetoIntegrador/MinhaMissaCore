@@ -13,11 +13,11 @@
         /// <summary>
         /// Email do usuário.
         /// </summary>
-        public string PasswordHash { get; set; } = default!;
+        public byte[] PasswordHash { get; set; } = default!;
         /// <summary>
         /// Senha do usuário.
         /// </summary>
-        public string PasswordSalt { get; set; } = default!;
+        public byte[] PasswordSalt { get; set; } = default!;
         /// <summary>
         /// Define a regra de acesso do usuário.
         /// </summary>

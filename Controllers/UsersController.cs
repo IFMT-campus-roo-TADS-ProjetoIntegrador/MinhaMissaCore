@@ -55,8 +55,7 @@ namespace MinhaMissaCore.Controllers
             }
 
             userToUpdate.Username = userRequest.Username;
-            userToUpdate.PasswordHash = userRequest.PasswordHash;
-            userToUpdate.PasswordSalt = userRequest.PasswordSalt;
+            userToUpdate.Password = userRequest.Password;
             userToUpdate.EventsRegistered = userRequest.EventsRegistered;
             userToUpdate.Role = userRequest.Role;
             userToUpdate.Active = userRequest.Active;

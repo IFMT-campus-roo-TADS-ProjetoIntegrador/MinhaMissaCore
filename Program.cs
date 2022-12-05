@@ -1,5 +1,7 @@
 global using MinhaMissaCore.Data;
 global using Microsoft.EntityFrameworkCore;
+global using SimpleEmailApp.Services.EmailService;
+global using SimpleEmailApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
 

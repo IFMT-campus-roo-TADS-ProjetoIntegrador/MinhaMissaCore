@@ -7,7 +7,7 @@ namespace MinhaMissaCore.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private static List<User> Users = new List<User>();
+        public static List<User> Users = new List<User>();
 
         public DataContext dataContext;
 
@@ -19,7 +19,7 @@ namespace MinhaMissaCore.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
-            return Ok(Users);
+            return Ok(this.dataContext.Users);
         }
 
         [HttpGet("{id}")]
@@ -56,7 +56,7 @@ namespace MinhaMissaCore.Controllers
 
             userToUpdate.Username = userRequest.Username;
             userToUpdate.Password = userRequest.Password;
-            userToUpdate.EventsRegistered = userRequest.EventsRegistered;
+            //userToUpdate.EventsRegistered = userRequest.EventsRegistered;
             userToUpdate.Role = userRequest.Role;
             userToUpdate.Active = userRequest.Active;
 

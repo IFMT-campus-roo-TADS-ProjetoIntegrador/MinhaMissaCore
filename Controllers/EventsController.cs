@@ -19,7 +19,7 @@ namespace MinhaMissaCore.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Event>>> Get()
         {
-            return Ok(Events);
+            return Ok(this.dataContext.Events);
         }
 
         [HttpGet("{id}")]

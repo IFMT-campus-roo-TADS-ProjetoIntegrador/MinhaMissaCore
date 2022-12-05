@@ -37,10 +37,10 @@
         /// <summary>
         /// Lista de usuários participantes do Evento.
         /// </summary>
-        public List<User>? Participants { get; set; } = default!;
-        /// <summary>
-        /// Indica se o evento está ativo.
-        /// </summary>
+        //public List<User>? Participants { get; set; } = default!;
+        ///// <summary>
+        ///// Indica se o evento está ativo.
+        ///// </summary>
         public bool Active { get; set; } = default!;
 
 

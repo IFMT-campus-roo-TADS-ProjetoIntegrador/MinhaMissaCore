@@ -26,7 +26,7 @@
         /// <summary>
         /// Lista de eventos registrados do usuário.
         /// </summary>
-        public List<Event> EventsRegistered { get; set; } = default!;
+        //public List<Event> EventsRegistered { get; set; } = default!;
         /// <summary>
         /// Indica se o usuário está ativo
         /// </summary>

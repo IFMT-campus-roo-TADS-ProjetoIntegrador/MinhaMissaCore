@@ -37,10 +37,13 @@ namespace MinhaMissaCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastDate")
+                    b.Property<DateTime>("Duration")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Local")
+                    b.Property<int?>("InstituitionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -48,7 +51,7 @@ namespace MinhaMissaCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Places")
+                    b.Property<int>("Seats")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
@@ -56,7 +59,30 @@ namespace MinhaMissaCore.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("InstituitionId");
+
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("MinhaMissaCore.Model.Instituition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Intituitions");
                 });
 
             modelBuilder.Entity("MinhaMissaCore.Model.User", b =>
@@ -67,13 +93,11 @@ namespace MinhaMissaCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("InstituitionId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -83,9 +107,36 @@ namespace MinhaMissaCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("InstituitionId");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("MinhaMissaCore.Model.Event", b =>
+                {
+                    b.HasOne("MinhaMissaCore.Model.Instituition", "Instituition")
+                        .WithMany()
+                        .HasForeignKey("InstituitionId");
+
+                    b.Navigation("Instituition");
+                });
+
+            modelBuilder.Entity("MinhaMissaCore.Model.User", b =>
+                {
+                    b.HasOne("MinhaMissaCore.Model.Instituition", null)
+                        .WithMany("Users")
+                        .HasForeignKey("InstituitionId");
+                });
+
+            modelBuilder.Entity("MinhaMissaCore.Model.Instituition", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

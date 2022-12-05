@@ -14,7 +14,6 @@
         /// Localização do local do evento.
         /// </summary>
         public string Location { get; set; } = string.Empty ;
-
         /// <summary>
         /// Descrição do evento. Conta resumidamente como será o evento.
         /// </summary>
@@ -43,5 +42,14 @@
         /// Indica se o evento está ativo.
         /// </summary>
         public bool Active { get; set; } = default!;
+
+
+
+        public Event()
+        {
+            this.Active = true;
+        }
     }
+
+
 }
